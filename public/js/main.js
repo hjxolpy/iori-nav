@@ -308,10 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentSearchEngine = 'local';
   if (engineOptions.length > 0) {
     currentSearchEngine = localStorage.getItem('search_engine') || 'local';
-    if (currentSearchEngine === 'bing') {
-      currentSearchEngine = 'github';
-      localStorage.setItem('search_engine', currentSearchEngine);
-    }
+   
   } else {
     // 清除之前保存的外部搜索引擎选择
     localStorage.removeItem('search_engine');
@@ -331,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let placeholder = '搜索书签...';
     switch (engine) {
       case 'google': placeholder = 'Google 搜索...'; break;
+      case 'bing': placeholder = 'Bing 搜索...'; break;
       case 'baidu': placeholder = '百度搜索...'; break;
       case 'github': placeholder = 'GitHub 搜索...'; break;
     }
@@ -398,6 +396,7 @@ document.addEventListener('DOMContentLoaded', function () {
           let url = '';
           switch (currentSearchEngine) {
             case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
+            case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
             case 'baidu': url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`; break;
             case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
           }
