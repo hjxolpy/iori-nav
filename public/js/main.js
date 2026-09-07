@@ -307,8 +307,17 @@ document.addEventListener('DOMContentLoaded', function () {
   // 如果外部搜索被禁用（没有搜索引擎选项），强制使用本地搜索
   let currentSearchEngine = 'local';
   if (engineOptions.length > 0) {
-    currentSearchEngine = localStorage.getItem('search_engine') || 'local';
-   
+    const saved = localStorage.getItem('search_engine');
+    // 兼容旧值：将已删除的 google/github 选项迁移到 bing
+    if (saved === 'google') {
+      localStorage.setItem('search_engine', 'bing');
+      currentSearchEngine = 'bing';
+    } else if (saved === 'github') {
+      localStorage.removeItem('search_engine');
+      currentSearchEngine = 'local';
+    } else {
+      currentSearchEngine = saved || 'bing';
+    }
   } else {
     // 清除之前保存的外部搜索引擎选择
     localStorage.removeItem('search_engine');
